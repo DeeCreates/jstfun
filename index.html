@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Millicent — a question from the heart</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- SF Pro / Inter font for true Apple feel -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'SF Pro Display', system-ui, sans-serif;
+      background: radial-gradient(circle at 20% 30%, #fef2f2 0%, #fee2e2 40%, #fce7f3 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    /* FULL LIQUID GLASS EXPERIENCE — Apple's latest design language */
+    .liquid-glass {
+      background: rgba(255, 255, 255, 0.68);
+      backdrop-filter: blur(30px) saturate(220%);
+      -webkit-backdrop-filter: blur(30px) saturate(220%);
+      border-radius: 56px;
+      border: 1px solid rgba(255, 255, 255, 0.65);
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25), 0 0 0 0.5px rgba(255, 255, 255, 0.6) inset;
+      transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    /* secondary glass for celebration overlay */
+    .liquid-glass-deep {
+      background: rgba(255, 248, 245, 0.82);
+      backdrop-filter: blur(40px) saturate(200%);
+      -webkit-backdrop-filter: blur(40px) saturate(200%);
+      border: 1px solid rgba(255, 255, 245, 0.7);
+      border-radius: 64px;
+      box-shadow: 0 30px 50px -20px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Apple-style micro-interactions */
+    .apple-button {
+      transition: all 0.2s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+      position: relative;
+      overflow: hidden;
+    }
+    .apple-button:active {
+      transform: scale(0.97);
+    }
+
+    /* Shine effect (premium) */
+    .shine-overlay::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -60%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(115deg, rgba(255,255,255,0) 10%, rgba(255,255,255,0.5) 50%, rgba(255,255,255,0) 90%);
+      transform: rotate(25deg);
+      opacity: 0;
+      transition: opacity 0.4s;
+      pointer-events: none;
+    }
+    .shine-overlay:hover::after {
+      opacity: 1;
+      animation: liquidShine 0.8s ease-out;
+    }
+    @keyframes liquidShine {
+      0% { transform: translateX(-120%) rotate(25deg); }
+      100% { transform: translateX(100%) rotate(25deg); }
+    }
+
+    /* moving "no" button with liquid glass motion */
+    .liquid-move-btn {
+      transition: top 0.28s cubic-bezier(0.2, 0.95, 0.5, 1.05), left 0.28s cubic-bezier(0.2, 0.95, 0.5, 1.05), transform 0.2s ease;
+      will-change: top, left;
+      backdrop-filter: blur(16px);
+    }
+
+    /* floating elements */
+    @keyframes floatUpHeart {
+      0% { transform: translateY(0) scale(0.6) rotate(0deg); opacity: 0; }
+      20% { opacity: 0.9; }
+      80% { opacity: 0.7; }
+      100% { transform: translateY(-120vh) scale(1.3) rotate(400deg); opacity: 0; }
+    }
+    .apple-floating {
+      position: fixed;
+      pointer-events: none;
+      z-index: 200;
+      animation: floatUpHeart 3.2s ease-out forwards;
+      filter: drop-shadow(0 8px 16px rgba(0,0,0,0.1));
+    }
+
+    @keyframes gentleApplePulse {
+      0% { box-shadow: 0 0 0 0 rgba(244, 63, 94, 0.3); }
+      70% { box-shadow: 0 0 0 18px rgba(244, 63, 94, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(244, 63, 94, 0); }
+    }
+    .apple-pulse {
+      animation: gentleApplePulse 2.2s infinite;
+    }
+
+    /* fade in animation (apple-style smooth) */
+    @keyframes appleFadeUp {
+      0% { opacity: 0; transform: translateY(18px) scale(0.96); }
+      100% { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    .fade-apple {
+      animation: appleFadeUp 0.55s cubic-bezier(0.2, 0.9, 0.3, 1.1) forwards;
+    }
+
+    /* cursor blinking for typing */
+    .cursor-blink {
+      display: inline-block;
+      width: 2.5px;
+      height: 1.4em;
+      background-color: #f43f5e;
+      margin-left: 4px;
+      border-radius: 2px;
+      animation: blinkCursor 1s step-end infinite;
+      vertical-align: middle;
+    }
+    @keyframes blinkCursor {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+
+    /* modern scroll hidden */
+    ::-webkit-scrollbar {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- PROPOSAL CARD — full liquid glass, apple purity -->
+  <div id="proposalCard" class="w-full max-w-xl transition-all duration-500 fade-apple">
+    <div class="liquid-glass p-7 md:p-10 text-center relative overflow-hidden">
+      
+      <!-- ambient blur orbs (apple depth) -->
+      <div class="absolute top-[-30%] right-[-15%] w-72 h-72 bg-pink-300/20 rounded-full blur-3xl pointer-events-none"></div>
+      <div class="absolute bottom-[-20%] left-[-10%] w-56 h-56 bg-rose-200/30 rounded-full blur-3xl pointer-events-none"></div>
+      
+      <!-- interactive sparkle emoji (liquid glass friendly) -->
+      <div class="relative inline-block mb-2 cursor-pointer group" id="magicEmoji">
+        <div class="text-7xl md:text-8xl transition-transform duration-300 group-hover:scale-105 drop-shadow-md">💖🌸</div>
+        <div class="absolute -top-2 -right-2 opacity-0 group-hover:opacity-100 transition text-2xl">✨</div>
+      </div>
+      
+      <!-- Apple-style large title -->
+      <h1 class="text-4xl md:text-6xl font-semibold tracking-tight bg-gradient-to-r from-rose-500 via-pink-500 to-rose-500 bg-clip-text text-transparent mt-2">
+        Millicent
+      </h1>
+      
+      <div class="h-[2px] w-16 bg-gradient-to-r from-rose-300 to-pink-300 mx-auto my-5 rounded-full"></div>
+      
+      <!-- animated message zone -->
+      <div class="space-y-2 mb-7 px-1">
+        <p class="text-gray-600 text-base md:text-lg font-medium tracking-wide">
+          There's something I’ve been meaning to ask you...
+        </p>
+        <div class="min-h-[100px] flex justify-center items-center">
+          <div class="text-rose-600 font-semibold text-xl md:text-2xl max-w-sm mx-auto leading-relaxed" id="messageArea">
+            <span id="typedMessage"></span><span class="cursor-blink"></span>
+          </div>
+        </div>
+      </div>
+      
+      <!-- main question with apple badge glass -->
+      <div class="my-5">
+        <div class="inline-flex items-center gap-2 bg-white/45 backdrop-blur-lg rounded-full px-6 py-3 shadow-sm border border-white/60">
+          <span class="text-2xl">💗</span>
+          <span class="text-xl md:text-2xl font-medium text-gray-800 tracking-wide">Will you be my girlfriend?</span>
+          <span class="text-2xl">💗</span>
+        </div>
+      </div>
+      
+      <!-- interactive button zone (liquid motion) -->
+      <div class="relative h-48 md:h-56 w-full mt-3">
+        <!-- YES BUTTON — apple gradient + shine -->
+        <button id="yesBtn" 
+                class="apple-button shine-overlay absolute top-1/2 left-[28%] -translate-x-1/2 -translate-y-1/2 bg-gradient-to-r from-rose-500 to-pink-500 text-white font-semibold py-4 px-8 rounded-2xl shadow-xl text-xl md:text-2xl tracking-wide apple-pulse hover:shadow-2xl transition-all duration-200 hover:scale-105">
+          Yes 💖
+        </button>
+        
+        <!-- NO BUTTON — playful glass runner -->
+        <button id="noBtn" 
+                class="liquid-move-btn absolute top-[58%] left-[64%] -translate-x-1/2 -translate-y-1/2 bg-white/20 backdrop-blur-xl text-white font-medium py-4 px-7 rounded-2xl shadow-md text-lg md:text-xl border border-white/50 hover:shadow-lg">
+          Not now 😊
+        </button>
+      </div>
+      
+      <!-- playful hint with apple-like capsule -->
+      <div class="mt-5 flex items-center justify-center gap-2 text-xs md:text-sm text-rose-500/80 bg-white/35 backdrop-blur-sm w-fit mx-auto px-5 py-2 rounded-full">
+        <span class="inline-block w-1.5 h-1.5 bg-rose-400 rounded-full animate-pulse"></span>
+        <span>the “Not now” button likes to wander — try catching it ✨</span>
+      </div>
+      
+      <!-- subtle bottom signature -->
+      <div class="mt-7 pt-3 text-xs text-gray-400 flex justify-center gap-3 border-t border-white/30">
+        <span>💖 every heartbeat</span>
+        <span>•</span>
+        <span>🌸 every smile</span>
+        <span>•</span>
+        <span>✨ you</span>
+      </div>
+    </div>
+  </div>
+  
+  <!-- CELEBRATION SCREEN — full liquid glass deep (apple inspired) -->
+  <div id="celebrationScreen" class="hidden fixed inset-0 flex items-center justify-center z-[100] p-5 transition-all duration-500">
+    <div class="absolute inset-0 bg-black/10 backdrop-blur-md"></div>
+    <div class="relative liquid-glass-deep max-w-lg w-full p-8 md:p-10 text-center shadow-2xl border border-white/70 fade-apple">
+      <div class="absolute -top-6 left-1/2 -translate-x-1/2 bg-white rounded-full p-3 shadow-xl">
+        <span class="text-5xl">💍💖</span>
+      </div>
+      <div class="mt-10">
+        <div class="text-7xl md:text-8xl animate-bounce inline-block">🎉💗🎉</div>
+        <h2 class="text-4xl md:text-6xl font-semibold bg-gradient-to-r from-rose-500 to-pink-500 bg-clip-text text-transparent mt-3">
+          Yes!
+        </h2>
+        <p class="text-2xl md:text-3xl font-medium text-gray-800 mt-2">
+          Millicent, you made my world.
+        </p>
+        <div class="my-5 w-20 h-1 bg-rose-300 mx-auto rounded-full"></div>
+        <div class="bg-white/40 backdrop-blur-md rounded-2xl p-5 my-4 border border-white/50">
+          <p class="text-lg md:text-xl text-gray-700 leading-relaxed font-light">
+            “From this moment, it's you & me. <br>Endless laughter, late-night talks, and a love story just beginning.”
+          </p>
+        </div>
+        <p class="text-xl font-serif text-rose-600 mt-3">I'm the luckiest — forever yours. ❤️</p>
+        <button id="replayBtn" class="mt-8 bg-gradient-to-r from-rose-400 to-pink-400 hover:from-rose-500 hover:to-pink-500 text-white font-semibold px-8 py-3 rounded-2xl shadow-lg transition-all duration-200 text-lg backdrop-blur-sm apple-button">
+          🌸 Relive the magic 🌸
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // -------------------------------
+    // APPLE INSPIRED + FULL LIQUID GLASS
+    // For Millicent — elegant, playful & premium
+    // -------------------------------
+    
+    // DOM elements
+    const proposalDiv = document.getElementById('proposalCard');
+    const celebrationDiv = document.getElementById('celebrationScreen');
+    const yesButton = document.getElementById('yesBtn');
+    const noButton = document.getElementById('noBtn');
+    const replayButton = document.getElementById('replayBtn');
+    const typedSpan = document.getElementById('typedMessage');
+    
+    // Apple-style long message (sweet)
+    const loveMessage = "You bring light into my days, kindness into my heart, and a smile that never fades. 💕";
+    let msgIndex = 0;
+    let typingInterval = null;
+    
+    function startTypingApple() {
+      if (typingInterval) clearInterval(typingInterval);
+      typedSpan.innerHTML = '';
+      msgIndex = 0;
+      typingInterval = setInterval(() => {
+        if (msgIndex < loveMessage.length) {
+          typedSpan.innerHTML += loveMessage.charAt(msgIndex);
+          msgIndex++;
+        } else {
+          clearInterval(typingInterval);
+          const heartExtra = document.createElement('span');
+          heartExtra.innerHTML = ' 🌸✨';
+          heartExtra.classList.add('inline-block', 'animate-pulse');
+          typedSpan.appendChild(heartExtra);
+        }
+      }, 40);
+    }
+    
+    startTypingApple();
+    
+    // ---------- LIQUID MOVEMENT FOR "NO" BUTTON (playful, smooth, never stuck) ----------
+    function getRandomPositionWithinParent(btn) {
+      const parent = btn.parentElement;
+      if (!parent) return { top: 58, left: 64 };
+      const parentRect = parent.getBoundingClientRect();
+      if (parentRect.width === 0) return { top: 58, left: 64 };
+      
+      const minTop = 12;
+      const maxTop = 84;
+      const minLeft = 12;
+      const maxLeft = 84;
+      
+      let randTop = Math.random() * (maxTop - minTop) + minTop;
+      let randLeft = Math.random() * (maxLeft - minLeft) + minLeft;
+      
+      // avoid YES button area (left ~28% zone)
+      const yesSafeLeftLimit = 34;
+      if (randLeft < yesSafeLeftLimit && randTop > 28 && randTop < 78) {
+        randLeft = Math.min(maxLeft, randLeft + 28);
+        randTop = Math.min(maxTop - 6, randTop + 14);
+      }
+      return { top: randTop, left: randLeft };
+    }
+    
+    let moveBlock = false;
+    function moveNoButtonFluid() {
+      if (!noButton || moveBlock) return;
+      moveBlock = true;
+      const { top, left } = getRandomPositionWithinParent(noButton);
+      noButton.style.top = top + '%';
+      noButton.style.left = left + '%';
+      const slightRotate = (Math.random() - 0.5) * 5;
+      noButton.style.transform = `translate(-50%, -50%) rotate(${slightRotate}deg)`;
+      setTimeout(() => {
+        if (noButton) noButton.style.transform = `translate(-50%, -50%) rotate(0deg)`;
+      }, 200);
+      createMiniSparkleEffect(noButton);
+      setTimeout(() => { moveBlock = false; }, 240);
+    }
+    
+    function createMiniSparkleEffect(element) {
+      const rect = element.getBoundingClientRect();
+      const spark = document.createElement('div');
+      spark.innerHTML = '✨';
+      spark.style.position = 'fixed';
+      spark.style.left = (rect.left + rect.width/2 - 12) + 'px';
+      spark.style.top = (rect.top + rect.height/2 - 12) + 'px';
+      spark.style.fontSize = '28px';
+      spark.style.pointerEvents = 'none';
+      spark.style.zIndex = '999';
+      spark.style.filter = 'drop-shadow(0 0 6px #ffb7c5)';
+      spark.style.opacity = '0.9';
+      spark.style.transition = 'transform 0.2s ease, opacity 0.2s';
+      document.body.appendChild(spark);
+      setTimeout(() => {
+        spark.style.transform = 'scale(1.7)';
+        spark.style.opacity = '0';
+        setTimeout(() => spark.remove(), 200);
+      }, 15);
+    }
+    
+    // NO button interactions: hover, click, touch, focus
+    function handleNoMove(e) {
+      e.preventDefault();
+      moveNoButtonFluid();
+      if (navigator.vibrate) navigator.vibrate(20);
+    }
+    
+    noButton.addEventListener('click', handleNoMove);
+    noButton.addEventListener('mouseenter', () => { setTimeout(() => moveNoButtonFluid(), 35); });
+    noButton.addEventListener('touchstart', handleNoMove);
+    noButton.addEventListener('focus', () => moveNoButtonFluid());
+    
+    // adjust on window resize so no button doesn't get out of bounds
+    let resizeTimerApple;
+    window.addEventListener('resize', () => {
+      if (resizeTimerApple) clearTimeout(resizeTimerApple);
+      resizeTimerApple = setTimeout(() => {
+        if (proposalDiv && !proposalDiv.classList.contains('hidden') && noButton) {
+          const currentLeft = parseFloat(noButton.style.left);
+          if (isNaN(currentLeft) || currentLeft > 88) {
+            noButton.style.top = '58%';
+            noButton.style.left = '64%';
+          }
+        }
+      }, 130);
+    });
+    
+    // ---------- YES CELEBRATION: apple liquid glass heart rain + premium particles ----------
+    function createFloatingHeartsApple(total = 85) {
+      const icons = ['💖', '💗', '💓', '🌸', '💕', '✨', '💞', '🎀', '⭐', '💫', '❤️', '🌺'];
+      for (let i = 0; i < total; i++) {
+        const heartEl = document.createElement('div');
+        heartEl.innerHTML = icons[Math.floor(Math.random() * icons.length)];
+        heartEl.classList.add('apple-floating');
+        heartEl.style.left = Math.random() * 100 + '%';
+        heartEl.style.bottom = '-30px';
+        heartEl.style.fontSize = (Math.random() * 28 + 22) + 'px';
+        heartEl.style.animationDuration = (Math.random() * 2.2 + 2.5) + 's';
+        heartEl.style.animationDelay = Math.random() * 1.4 + 's';
+        document.body.appendChild(heartEl);
+        heartEl.addEventListener('animationend', () => heartEl.remove());
+      }
+    }
+    
+    function createConfettiSparkle() {
+      for (let i = 0; i < 55; i++) {
+        const glitter = document.createElement('div');
+        glitter.innerHTML = ['✨', '⭐', '💫', '🌸', '🎉', '💖'][Math.floor(Math.random() * 6)];
+        glitter.style.position = 'fixed';
+        glitter.style.left = Math.random() * 100 + '%';
+        glitter.style.top = Math.random() * 80 + 10 + '%';
+        glitter.style.fontSize = (Math.random() * 26 + 18) + 'px';
+        glitter.style.pointerEvents = 'none';
+        glitter.style.zIndex = '210';
+        glitter.style.opacity = '0.8';
+        glitter.style.animation = 'floatUpHeart 1s ease-out forwards';
+        document.body.appendChild(glitter);
+        setTimeout(() => glitter.remove(), 1000);
+      }
+    }
+    
+    function celebrateYesApple() {
+      // liquid glass transition: fade out proposal
+      proposalDiv.style.opacity = '0';
+      proposalDiv.style.transform = 'scale(0.97)';
+      setTimeout(() => {
+        proposalDiv.classList.add('hidden');
+        celebrationDiv.classList.remove('hidden');
+      }, 280);
+      
+      createFloatingHeartsApple(95);
+      createConfettiSparkle();
+      
+      // additional flower petals (very apple spring)
+      for (let i = 0; i < 45; i++) {
+        const petal = document.createElement('div');
+        petal.innerHTML = ['🌸', '🌼', '💗', '✨', '💖'][Math.floor(Math.random() * 5)];
+        petal.style.position = 'fixed';
+        petal.style.left = Math.random() * 100 + '%';
+        petal.style.bottom = '-10px';
+        petal.style.fontSize = (Math.random() * 24 + 20) + 'px';
+        petal.style.pointerEvents = 'none';
+        petal.style.zIndex = '199';
+        petal.style.animation = 'floatUpHeart 3s ease-out forwards';
+        document.body.appendChild(petal);
+        setTimeout(() => petal.remove(), 3000);
+      }
+      
+      document.title = "💗 Millicent + You = Forever 💗";
+      if (navigator.vibrate) navigator.vibrate([80, 40, 80]);
+      
+      // add a beautiful ambient glow
+      const glow = document.createElement('div');
+      glow.style.position = 'fixed';
+      glow.style.inset = '0';
+      glow.style.background = 'radial-gradient(circle at center, rgba(255,210,225,0.25) 0%, transparent 75%)';
+      glow.style.pointerEvents = 'none';
+      glow.style.zIndex = '80';
+      document.body.appendChild(glow);
+      setTimeout(() => glow.remove(), 1200);
+    }
+    
+    function resetToProposalApple() {
+      celebrationDiv.classList.add('hidden');
+      proposalDiv.classList.remove('hidden');
+      proposalDiv.style.opacity = '1';
+      proposalDiv.style.transform = 'scale(1)';
+      // reset "no" button position to default
+      if (noButton) {
+        noButton.style.top = '58%';
+        noButton.style.left = '64%';
+        noButton.style.transform = 'translate(-50%, -50%) rotate(0deg)';
+      }
+      // restart typing experience
+      if (typingInterval) clearInterval(typingInterval);
+      startTypingApple();
+      document.title = "Millicent — a question from the heart";
+      // clean up any floating leftovers
+      document.querySelectorAll('.apple-floating').forEach(el => el.remove());
+    }
+    
+    yesButton.addEventListener('click', celebrateYesApple);
+    replayButton.addEventListener('click', resetToProposalApple);
+    
+    // extra apple-like sparkle on emoji click
+    const magicEmoji = document.getElementById('magicEmoji');
+    if (magicEmoji) {
+      magicEmoji.addEventListener('click', (e) => {
+        createMiniSparkleEffect(e.currentTarget);
+        const note = document.createElement('div');
+        note.innerText = '💘 you’re my favorite thought 💘';
+        note.className = 'fixed bottom-24 left-1/2 -translate-x-1/2 bg-black/60 backdrop-blur-xl text-white text-sm px-5 py-2 rounded-full z-50 animate-bounce';
+        document.body.appendChild(note);
+        setTimeout(() => note.remove(), 1800);
+      });
+    }
+    
+    // adjust body padding for apple safe area
+    function adjustApplePadding() {
+      if (window.innerWidth < 550) {
+        document.body.style.padding = '16px';
+      } else {
+        document.body.style.padding = '24px';
+      }
+    }
+    window.addEventListener('resize', adjustApplePadding);
+    adjustApplePadding();
+    
+    // final console apple-like love
+    console.log("%c✨ Millicent — this is just the beginning of something beautiful ✨", "color: #f472b6; font-size: 15px; font-weight: 500;");
+  </script>
+</body>
+</html>
